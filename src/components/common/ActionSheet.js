@@ -1,6 +1,32 @@
 import React, { useState, useRef, useEffect } from "react"
-import { View, Modal, TouchableWithoutFeedback, Animated, Easing, ScrollView } from "react-native"
+import { View, Modal, TouchableWithoutFeedback, Animated, Easing, ScrollView, Platform, StyleSheet } from "react-native"
 import { WIDTH_SCREEN, HEIGHT_SCREEN } from "./../../util/constants"
+import { BlurView } from "expo-blur"
+
+function CoverBackground(props) {
+    const { children, platform } = props
+
+    return (
+        <>
+            {platform === "ios" ? (
+                <BlurView
+                    intensity={100}
+                    style={[StyleSheet.absoluteFill, { width: WIDTH_SCREEN, height: HEIGHT_SCREEN }]}
+                >
+                    {children}
+                </BlurView>
+            ) : (
+                <BlurView
+                    tint="dark"
+                    intensity={100}
+                    style={[StyleSheet.absoluteFill, { width: WIDTH_SCREEN, height: HEIGHT_SCREEN }]}
+                >
+                    {children}
+                </BlurView>
+            )}
+        </>
+    )
+}
 
 function ActionSheet(props) {
     const { style, children, onClose = () => null, visible } = props
@@ -61,13 +87,7 @@ function ActionSheet(props) {
     return (
         <>
             <Modal statusBarTranslucent={true} visible={show} transparent>
-                <View
-                    style={{
-                        height: HEIGHT_SCREEN,
-                        width: WIDTH_SCREEN,
-                        alignItems: "center",
-                    }}
-                >
+                <CoverBackground platform={Platform.OS}>
                     <ScrollView
                         ref={scrollRef}
                         onLayout={() => {
@@ -78,13 +98,12 @@ function ActionSheet(props) {
                         showsVerticalScrollIndicator={false}
                         bounces={false}
                         contentContainerStyle={{
-                            backgroundColor: "#00000080",
                             width: WIDTH_SCREEN,
                         }}
                     >
                         <TouchableWithoutFeedback onPress={onClose}>
                             <View
-                                onTouchMove={onClose}
+                                //onTouchMove={onClose}
                                 style={{
                                     height: HEIGHT_SCREEN - PARTITION,
                                     width: "100%",
@@ -99,6 +118,7 @@ function ActionSheet(props) {
                                 height: HEIGHT,
                                 backgroundColor: "#FFF",
                                 borderTopRightRadius: 20,
+                                borderWidth: 0,
                                 borderTopLeftRadius: 20,
                                 transform: [{ translateY: translate }],
                                 alignItems: "center",
@@ -118,7 +138,7 @@ function ActionSheet(props) {
                             {children}
                         </Animated.View>
                     </ScrollView>
-                </View>
+                </CoverBackground>
             </Modal>
         </>
     )
