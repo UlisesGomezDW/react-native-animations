@@ -1,7 +1,4 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import Cards from './src/screens/main-screen'
+import React from "react"
+import Navigator from "./Navigator"
 
-export default function App() {
-    return <Cards />
-}
+export default Navigator

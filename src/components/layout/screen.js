@@ -1,6 +1,6 @@
-import React from 'react'
-import { View } from 'react-native'
-import Constants from 'expo-constants'
+import React from "react"
+import { View } from "react-native"
+import { STATUS_BAR_HEIGHT } from "./../../util/constants"
 
 function Screen(props) {
     const { children, style } = props
@@ -9,8 +9,8 @@ function Screen(props) {
             <View
                 style={{
                     flex: 1,
-                    backgroundColor: '#FFF',
-                    paddingTop: Constants.statusBarHeight,
+                    backgroundColor: "#FFF",
+                    paddingTop: STATUS_BAR_HEIGHT,
                     ...style,
                 }}
             >
