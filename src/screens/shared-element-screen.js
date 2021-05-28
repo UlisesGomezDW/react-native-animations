@@ -55,17 +55,12 @@ export function HomeScreen(props) {
     }
 
     function initAnimation() {
-        animation(refTranslate, -100, 500).start((status) => {
+        animation(refRotation, 1, 500).start((status) => {
             if (status.finished) {
-                animation(refRotation, 1, 500).start((status) => {
-                    if (status.finished) {
-                        navigation.navigate("Detail", { param: data[0] })
-                        setTimeout(() => {
-                            refTranslate.setValue(0)
-                            refRotation.setValue(0)
-                        }, 100)
-                    }
-                })
+                navigation.navigate("Detail", { param: data[0] })
+                setTimeout(() => {
+                    refRotation.setValue(0)
+                }, 100)
             }
         })
     }
@@ -81,10 +76,13 @@ export function HomeScreen(props) {
                 style={{
                     alignItems: "center",
                     paddingTop: 0,
+                    backgroundColor: "red",
                 }}
             >
                 <Navbar style={{ marginBottom: 30 }} />
-                <Text style={{ marginBottom: 50 }}>HOME</Text>
+                <Text onPress={() => refRotation.setValue(0)} style={{ marginBottom: 50 }}>
+                    HOME
+                </Text>
                 <Animated.View
                     style={{
                         transform: [{ translateY: refTranslate }, { rotate: rotate }],
@@ -143,11 +141,28 @@ export function DetailScreen(props) {
                         <Text style={{ color: "#FFF" }}>{label}</Text>
                     </ImageBackground>
                 </SharedElement>
+
+                <View
+                    style={{
+                        alignItems: "flex-start",
+                        width: "100%",
+                        paddingHorizontal: 20,
+                        marginTop: 20,
+                    }}
+                >
+                    <Text style={{ fontSize: 22, marginBottom: 10 }}>Text 1</Text>
+                    <Text style={{ fontSize: 16 }}>
+                        Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic
+                        or web designs. The passage is attributed to an unknown typesetter in the 15th century who is
+                        thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type
+                        specimen book.
+                    </Text>
+                </View>
             </Screen>
         </>
     )
 }
 
 DetailScreen.sharedElements = (navigation, otherNavigation, showing) => {
-    return [{ id: `id-element`, animation: "fade" }]
+    return [{ id: `id-element`, animation: "fade", resize: "auto" }]
 }
