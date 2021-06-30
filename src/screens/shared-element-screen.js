@@ -81,7 +81,7 @@ export function HomeScreen(props) {
             >
                 <Navbar style={{ marginBottom: 30 }} />
                 <Text onPress={() => refRotation.setValue(0)} style={{ marginBottom: 50 }}>
-                    HOME
+                    HOME ROTATE
                 </Text>
                 <Animated.View
                     style={{
